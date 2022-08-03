@@ -1,0 +1,5 @@
+python -m venv venv
+venv\Scripts\activate.bat
+deactivate
+python manage.py migrate
+python manage.py runserver
