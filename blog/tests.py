@@ -1,10 +1,11 @@
 import imp
 from turtle import pos
+from unicodedata import name
 from urllib import response
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Category
 
 
 class TestView(TestCase):
@@ -12,7 +13,9 @@ class TestView(TestCase):
 		self.client=Client()
 		self.user_trump=User.objects.create_user(username='trump',password='12345678')
 		self.user_biden=User.objects.create_user(username='biden',password='12345678')
-		
+		self.category_programming=Category.objects.create(name='programming',slug='programming')
+		self.category_music=Category.objects.create(name='music',slug='music')
+
 
 	def navbar_test(self,soup):
 		navbar=soup.nav
