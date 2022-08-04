@@ -1,6 +1,7 @@
 from statistics import mode
 from turtle import update
 from django.db import models
+from django.contrib.auth.models import User
 import os
 
 
@@ -15,11 +16,11 @@ class Post(models.Model):
 	file_upload=models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
 	created_at=models.DateTimeField(auto_now_add=True)
 	updated_at=models.DateTimeField(auto_now=True)
-	#author 추후 작성 예정
-
+	author=models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+	#author=models.ForeignKey(User,on_delete=models.CASCADE) 사용자 탈퇴 시 게시물도 함께 삭제
 
 	def __str__(self):
-		return f'[{self.pk}]{self.title}'
+		return f'[{self.pk}]{self.title} :: {self.author}'
 
 	
 	def get_absolute_url(self):
