@@ -31,22 +31,20 @@ class TestView(TestCase):
 			content='!',
 			author=self.user_biden
 		)
-
-
 		def category_card_test(self,soup)->None:
 			categories_card=soup.find('div',id='categories-card')
 			self.assertIn('Categories',categories_card.text)
 			self.assertIn(f'{self.category_programming.name}({self.category_programming.post_set.count()})',categories_card.text)
 			self.assertIn(f'{self.category_music.name}({self.category_miusic.post_set.count()})',categories_card.text)
 			self.assertIn(f'미분류 (1)',categories_card.text)
-
+		
 
 	def navbar_test(self,soup):
 		navbar=soup.nav
 		self.assertIn('Blog',navbar.text)
 		self.assertIn('About Me',navbar.text)
 
-
+	
 		logo_btn=navbar.find('a',text='Do it Django')
 		self.assertEqual(logo_btn.attrs['href'],'/')
 		home_btn=navbar.find('a',text='Home')
@@ -74,19 +72,6 @@ class TestView(TestCase):
 		
 		main_area=soup.find('div',id='main-area')
 		self.assertIn('아직 게시물이 없습니다',main_area.text)
-
-
-		post_001_card=main_area.find('div',id='post-1')
-		self.assertIn(self.post_001.title, post_001_card.text)
-		self.assertIn(self.post_001.category.name, post_001_card.text)
-		post_002_card=main_area.find('div',id='post-2')
-		self.assertIn(self.post_002.title, post_002_card.text)
-		self.assertIn(self.post_002.category.name, post_002_card.text)
-		post_003_card=main_area.find('div',id='post-3')
-		self.assertIn('미분류', post_001_card.text)
-		self.assertIn(self.post_003.category.name, post_003_card.text)
-		self.assertIn(self.user_trump.username, main_area.text)
-		self.assertIn(self.user_biden.username, main_area.text)
 
 
 		#포스트가 없는 경우
