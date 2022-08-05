@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+from asyncio.constants import ACCEPT_RETRY_DELAY
 import os
 from pathlib import Path
+from telnetlib import AUTHENTICATION
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +44,11 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     #markdownx는 안쓰는걸로
-
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     "blog",
     "single_pages",
@@ -92,6 +98,18 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
+
+AUTHENTICATION_BACKENDS= (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationsBackend',
+)
+
+
+SITE_ID=1
+ACCOUNT_EMAIL_REQUIRED=True
+ACCEPT_EMAIL_VERIFICATION='none'
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
