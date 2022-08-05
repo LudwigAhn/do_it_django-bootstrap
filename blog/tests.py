@@ -40,6 +40,7 @@ class TestView(TestCase):
 		self.post_003.tags.add(self.tag_python_kor)
 		self.post_003.tags.add(self.tag_python)
 
+
 def category_card_test(self, soup):
 	categories_card = soup.find('div', id='categories-card')
 	self.assertIn('Categories', categories_card.text)
@@ -85,6 +86,7 @@ def navbar_test(self, soup):
 	about_me_btn = navbar.find('a', text='About Me')
 	self.assertEqual(about_me_btn.attrs['href'], '/about_me/')
 
+
 def test_post_list(self):
 	# Post가 있는 경우
 	self.assertEqual(Post.objects.count(), 3)
@@ -101,10 +103,13 @@ def test_post_list(self):
 	main_area = soup.find('div', id='main-area')
 	self.assertNotIn('아직 게시물이 없습니다', main_area.text)
 
-	post_001_card = main_area.find('div', id='post-1')  # id가 post-1인 div를 찾아서, 그 안에
+	post_001_card = main_area.find(
+		'div', id='post-1')  # id가 post-1인 div를 찾아서, 그 안에
 	self.assertIn(self.post_001.title, post_001_card.text)  # title이 있는지
-	self.assertIn(self.post_001.category.name,post_001_card.text)  # category가 있는지
-	self.assertIn(self.post_001.author.username.upper(),post_001_card.text)  # 작성자명이 있는지
+	self.assertIn(self.post_001.category.name,
+				  post_001_card.text)  # category가 있는지
+	self.assertIn(self.post_001.author.username.upper(),
+				  post_001_card.text)  # 작성자명이 있는지
 	self.assertIn(self.tag_hello.name, post_001_card.text)
 	self.assertNotIn(self.tag_python.name, post_001_card.text)
 	self.assertNotIn(self.tag_python_kor.name, post_001_card.text)
@@ -124,7 +129,7 @@ def test_post_list(self):
 	self.assertNotIn(self.tag_hello.name, post_003_card.text)
 	self.assertIn(self.tag_python.name, post_003_card.text)
 	self.assertIn(self.tag_python_kor.name, post_003_card.text)
-	
+
 	# Post가 없는 경우
 	Post.objects.all().delete()
 	self.assertEqual(Post.objects.count(), 0)
@@ -132,6 +137,7 @@ def test_post_list(self):
 	soup = BeautifulSoup(response.content, 'html.parser')
 	main_area = soup.find('div', id='main-area')  # id가 main-area인 div태그를 찾습니다.
 	self.assertIn('아직 게시물이 없습니다', main_area.text)
+
 
 def test_post_detail(self):
 	self.assertEqual(self.post_001.get_absolute_url(), '/blog/1/')
@@ -159,3 +165,19 @@ def test_post_detail(self):
 	self.assertIn(self.post_001.content, post_area.text)
 	#네비게이션 바 테스트
 	self.navbar_test(soup)
+
+
+def test_create_post(self):
+	# 로그인 하지 않으면 status code가 200이면 안된다!
+	response = self.client.get('/blog/create_post/')
+	self.assertNotEqual(response.status_code, 200)
+
+	self.client.login(username='trump',password='12345678')
+	response = self.client.get('/blog/create_post/')
+	self.assertEqual(response.status_code, 200)
+	soup = BeautifulSoup(response.content, 'html.parser')
+
+	self.assertEqual('Create Post - Blog', soup.title.text)
+	main_area = soup.find('div', id='main-area')
+	self.assertIn('Create New Post', main_area.text)
+	
