@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+
+
     "crispy_forms",
+    #markdownx는 안쓰는걸로
+
 
     "blog",
     "single_pages",
@@ -119,7 +123,7 @@ STATIC_URL = "static/"
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'_media')
-CRISPY_TEMPLATE_PACK='bootstrap5'
+CRISPY_TEMPLATE_PACK='bootstrap'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
