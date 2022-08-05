@@ -180,4 +180,18 @@ def test_create_post(self):
 	self.assertEqual('Create Post - Blog', soup.title.text)
 	main_area = soup.find('div', id='main-area')
 	self.assertIn('Create New Post', main_area.text)
+
+	self.client.post(
+			'/blog/create_post/',
+			{
+				'title': 'Post Form 만들기',
+				'content': "Post Form 페이지를 만듭시다.",
+				'tags_str': 'new tag; 한글 태그, python'
+			}
+		)
 	
+	self.assertEqual(Post.objects.count(), 4)
+	last_post = Post.objects.last()
+	self.assertEqual(last_post.title, "Post Form 만들기")
+	self.assertEqual(last_post.author.username, 'trump')
+		
