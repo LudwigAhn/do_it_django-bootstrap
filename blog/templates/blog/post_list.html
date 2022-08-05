@@ -2,46 +2,55 @@
 
 
 {% block main_area %}
-<div class="col-md-8 col-lg-9" id="main-area">
-    {% if post_list.exists %}
-    <h1>Blog {% if category %}<span class="badge bg-primary float-right">{{ category }}</span>{% endif %}</h1>
+<h1>
+    Blog
+    {% if search_info %}<small class="text-muted">{{ search_info }}</small>{% endif %}
+    {% if category %}<span class="badge bg-secondary">{{ category }}</span>{% endif %}
+    {% if tag %}<span class="badge bg-success"><i class="fa-solid fa-tags"></i>{{ tag }} ({{ tag.post_set.count }})</span>{% endif %}
+</h1>
+
+{% if post_list.exists %}
+
     {% for p in post_list %}
-    <!-- Blog Post -->
-    <div class="card mb-4" id="post-{{ p.pk }}">
-        {% if p.head_image %}
-        <img class="card-img-top" src="{{p.head_image.url}}" alt="{{ p }} head_image">
-        {% else %}
-        {% endif %}
-        <div class="card-body">
-            {% if p.category %}
-                <span class="badge bg-secondary float-right">{{ p.category }}</span>
-            {% else %}
-                <span class="badge bg-secondary float-right">미분류</span>
+        <!-- Blog Post -->
+        <div class="card mb-4" id="post-{{ p.pk }}">
+            {% if p.head_image %}
+                <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image">
             {% endif %}
-            <h2 class="card-title">{{ p.title }}</h2>
-            {% if p.hook_text %}
-            <h5 class="text_muted">{{ p.hook_text }}</h5>
-            {% endif %}
-            <p class="card-text">{{ p.content | truncatechars:200 }}</p>
-            {% if p.tags.exists %}
-                <i class="fa-solid fa-tags"></i>
-                {% for tag in p.tags.all %}
-                    <a href="{{ tag.get_absolute_url }}"><span class="badge rounded-pill bg-success">{{ tag }}</span></a>
-                {% endfor %}
-                <br/>
-                <br/>
-            {% endif %}
-            <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
+            <div class="card-body">
+                {% if p.category %}
+                    <span class="badge bg-secondary float-right">{{ p.category }}</span>
+                {% else %}
+                    <span class="badge bg-secondary float-right">미분류</span>
+                {% endif %}
+
+                <h2 class="card-title">{{ p.title}}</h2>
+                {% if p.hook_text %}
+                    <h5 class="text-muted">{{ p.hook_text }}</h5>
+                {% endif %}
+                <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
+
+                {% if p.tags.exists %}
+                    <i class="fa-solid fa-tags"></i>
+                    {% for tag in p.tags.iterator %}
+                        <a href="{{ tag.get_absolute_url }}"><span class="badge rounded-pill bg-success">{{ tag }}</span></a>
+                    {% endfor %}
+                    <br/>
+                    <br/>
+                {% endif %}
+
+                <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted on {{ p.created_at}} by
+                <a href="#">{{ p.author }}</a>
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            Posted on {{p.created_at}} by
-            <a href="#">{{ p.author }}</a>
-        </div>
-    </div>
     {% endfor %}
-    {% else %}
+
+{% else %}
     <h3>아직 게시물이 없습니다.</h3>
-    {% endif %}
+{% endif %}
 
 
     <!-- Pagination -->
