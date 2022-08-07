@@ -3,11 +3,11 @@ from django.contrib import admin
 
 
 # Register your models here.
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 
 
 admin.site.register(Post)
-
+admin.site.register(Comment)
 
 class CategoryAdmin(admin.ModelAdmin):
 	prepopulated_fields={'slug': ('name', )}
@@ -19,3 +19,4 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Tag,TagAdmin)
+
