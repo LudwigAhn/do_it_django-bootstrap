@@ -60,6 +60,11 @@ class Post(models.Model):
 
 	def get_absolute_url(self):
 		return f'/blog/{self.pk}/'
+	def get_avatar_url(self):
+		if self.author.socialaccount_set.exists():
+			return self.author.socialaccount_set.first().get_avatar_url()
+		else:
+			return f'https://doitdjango.com/avatar/id/1218/1b635fc49c8af57a/svg/{self.author.email}'
 
 
 class Comment(models.Model):
@@ -68,9 +73,15 @@ class Comment(models.Model):
 	content = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	modified_at = models.DateTimeField(auto_now=True)
-
+	reply = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name="replies", null=True)
 	def __str__(self):
 		return f'{self.author}::{self.content}'
 
 	def get_absolute_url(self):
 		return f'{self.post.get_absolute_url()}#comment-{self.pk}'
+
+	def get_avatar_url(self):
+		if self.author.socialaccount_set.exists():
+			return self.author.socialaccount_set.first().get_avatar_url()
+		else:
+			return f'https://doitdjango.com/avatar/id/1218/1b635fc49c8af57a/svg/{self.author.email}'
