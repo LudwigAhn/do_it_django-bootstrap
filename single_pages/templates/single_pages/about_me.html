@@ -86,17 +86,21 @@
 			</div>
 			<div class="item" id="Skills">
 				<h2>Skills</h2><br>
-				<i class="fa-brands fa-html5"></i>
-				HTML5
-				<i class="fa-brands fa-css3-alt"></i>
-				CSS3
-				<i class="fa-brands fa-js"></i>
-				JavaScript
+				<button type="button" onclick="location.href='https://developer.mozilla.org/ko/docs/Web/HTML' ">
+					<i class="fa-brands fa-html5"></i>Html</button>
+
+				<button type="button" onclick="location.href='https://developer.mozilla.org/ko/docs/Web/CSS' ">
+					<i class="fa-brands fa-css3-alt"></i>Css</button>
+
+				<button type="button" onclick="location.href='https://developer.mozilla.org/ko/docs/Web/JavaScript' ">
+					<i class="fa-brands fa-js"></i>JavaScript</button>
+
 				<br>
-				<i class="fa-brands fa-python" ></i>
-				Python
-				<i class="fa-solid fa-c"></i>
-				C
+				<button type="button" onclick="location.href='https://www.python.org/' ">
+					<i class="fa-brands fa-python"></i>Python</button>
+				<button type="button"
+					onclick="location.href='https://ko.wikipedia.org/wiki/C_(%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D_%EC%96%B8%EC%96%B4)' ">
+					<i class="fa-brands fa-c"></i>C</button>
 			</div>
 			<div class="item" id="Experience">
 				<h2>Experience</h2>
@@ -140,7 +144,7 @@
 					<div class="icon">
 						<i class="fa-solid fa-location-dot"></i>
 					</div>
-					<p class="info_text">address&nbsp;Daegu</p>
+					<p class="info_text">address&nbsp;Berlin</p>
 				</div>
 			</div>
 			<div class="right">
@@ -161,17 +165,15 @@
 						<textarea id="message" name="message" rows="10"
 							placeholder=" Please leave a message"></textarea>
 					</div>
-					<button class="button-success pure-button button-xlarge" onclick="send()">
-						<i class="fa fa-paper-plane"></i>&nbsp;Send</button>
 				</form>
 			</div>
 		</div>
 	</section>
 	<iframe name='iframe0' width='0' height='0' frameborder='0'></iframe>
 	<script src="{% static 'single_pages/js/action.js' %}"></script>
-	
-		{% include 'blog/footer.html' %}
-	
+
+	{% include 'blog/footer.html' %}
+
 </body>
 
 </html>
