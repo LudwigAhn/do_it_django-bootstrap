@@ -131,3 +131,5 @@ dmypy.json
 # Vscode
 migrations/
 _media/
+.env.prod
+.env.prod.db

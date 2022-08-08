@@ -14,3 +14,6 @@ docker-compose build
 docker-compose up
 docker-compose down
 docker-compose up -d
+
+
+pip freeze > requirements.txt
