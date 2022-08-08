@@ -8,3 +8,9 @@ python manage.py migrate
 python manage.py runserver
 python manage.py test
 python manage.py shell_plus
+
+
+docker-compose build
+docker-compose up
+docker-compose down
+docker-compose up -d
