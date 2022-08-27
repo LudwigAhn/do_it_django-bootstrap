@@ -27,6 +27,8 @@
 			{% if user.is_authenticated and user == post.author %}
 			<a clss="btn btn-info btn-sm float-right" href="/blog/update_post/{{ post.pk }}/" role="button"><i
 					class="fa-solid fa-pen"></i> Edit Post</a>
+			<a clss="btn btn-info btn-sm float-right" onclick="fn_del_qna();" role="button"><i
+					class="fa-solid fa-pen"></i> Delete Post</a>
 			{% endif %}
 		</header>
 		<!-- Preview image figure-->
@@ -88,8 +90,8 @@
 				{% for comment in post.comment_set.all %}
 				<!-- Single comment-->
 				<div class="d-flex" id="comment-{{ comment.pk }}">
-					<div class="flex-shrink-0"><img class="rounded-circle"
-							src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="60px"></div>
+					<div class="flex-shrink-0"><img class="rounded-circle" src="{{ comment.get_avatar_url }}"
+							alt="{{ comment.author }}" width="60px"></div>
 					<div class="ms-3">
 						<div class="fw-bold">{{ comment.author.username }} &nbsp;&nbsp;<small class="text-muted">
 								{{ comment.created_at }} </small></div>
@@ -140,4 +142,13 @@
 		</div>
 	</section>
 </div>
+<script>
+	function fn_del_qna(){
+		  var res = confirm('게시글을 정말로 삭제하시겠습니까?');
+		  if(res){
+			window.location.href = "/blog/delete_post/{{ post.pk }}/"
+			alert("성공적으로 삭제되었습니다.");
+		  }
+		}
+</script>
 {% endblock %}
